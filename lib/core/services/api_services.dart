@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:get/get_connect.dart';
+import 'package:project_structure/core/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ErrorModel {
@@ -16,7 +17,7 @@ enum METHODE {
 }
 
 class ApiBaseHelper extends GetConnect {
-  final String baseurl = "https://";
+  final String baseurl = Constants.apiBaseUrl;
   Future<dynamic> onNetworkRequesting({
     required String url,
     Map<String, String>? header,
