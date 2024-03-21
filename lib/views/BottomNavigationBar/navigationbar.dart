@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project_structure/core/utils/app_fonts.dart';
-import 'package:project_structure/views/home/home_screen.dart';
-import 'package:project_structure/views/more/more.dart';
+import 'package:project_structure/view_model/BottomNavigationBar/navigationbar_view_model.dart';
+import 'package:project_structure/widgets/custom_drawer.dart';
+import 'package:project_structure/widgets/custom_appbar.dart';
+import 'package:project_structure/widgets/custom_navigationbar.dart';
 
 class BottomNavigationBarScreen extends StatefulWidget {
   const BottomNavigationBarScreen({super.key});
@@ -12,45 +15,59 @@ class BottomNavigationBarScreen extends StatefulWidget {
 }
 
 class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
-  int _selectedIndex = 0;
-  static List<Widget> screenWidget = <Widget>[
-    const MyHomePage(),
-    Text(
-      'Index 1: Business',
-      style: appbarTextSyle(),
-    ),
-    const MoreScreen(),
-  ];
+  final controller = Get.put(BottomNavigationBarController());
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      controller.selectedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: screenWidget.elementAt(_selectedIndex),
+      key: controller.scaffoldKey,
+      appBar: customAppBar(
+        isLeading: false,
+        title: controller.listTitle.elementAt(controller.selectedIndex),
+        context: context,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.menu_rounded,
+            size: 30,
+          ),
+          onPressed: () {
+            controller.scaffoldKey.currentState?.openDrawer();
+          },
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'More',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: const Color.fromARGB(255, 108, 39, 176),
+      drawer: CustomDrawer(
+        child: ListView(
+          physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: Get.height * 0.18,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                ),
+                child: Text(
+                  'Drawer Header',
+                  style: appbarTextSyle(),
+                ),
+              ),
+            ),
+            // const ChangeLanguageView(),
+            // DarkModeView(),
+          ],
+        ),
+      ),
+      body: Center(
+        child: controller.screenWidget.elementAt(controller.selectedIndex),
+      ),
+      bottomNavigationBar: customNavigationBar(
+        currentIndex: controller.selectedIndex,
         onTap: _onItemTapped,
       ),
     );

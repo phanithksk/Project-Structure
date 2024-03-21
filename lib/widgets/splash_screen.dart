@@ -15,21 +15,16 @@ class SplashScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/icons/Flutter_logo.png',
-                fit: BoxFit.cover,
-                height: 250,
-              ),
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/icons/Flutter_logo.png',
+              fit: BoxFit.cover,
+              height: 250,
+            ),
+          ],
         ),
       ),
     );
