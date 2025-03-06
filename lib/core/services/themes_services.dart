@@ -10,7 +10,6 @@ class ThemeService {
     hoverColor: AppColor().black,
     scaffoldBackgroundColor: AppColor().white,
     primaryColor: AppColor().primaryColor,
-    backgroundColor: AppColor().backgroundColor,
   );
 
   // dark mode color
@@ -18,7 +17,6 @@ class ThemeService {
     hoverColor: AppColor().white,
     scaffoldBackgroundColor: AppColor().darkPrimaryColor,
     primaryColor: AppColor().darkPrimaryColor,
-    backgroundColor: AppColor().darkPrimaryColor,
   );
 
   final _getStorage = GetStorage();
